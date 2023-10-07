@@ -4,13 +4,13 @@ using UnityEditor;
 public class GrassManagerWindow : EditorWindow
 {
     private Color grassHealthyColor = Color.white;
-    private Color grassDryColor = Color.grey;
+    private Color grassDryColor = Color.grey;  //495706
 
     private Terrain[] terrains;
-    private float grassMinWidth = 1;
-    private float grassMaxWidth = 2;
-    private float grassMinHeight = 1;
-    private float grassMaxHeight = 2;
+    private float grassMinWidth = 0.5f;
+    private float grassMaxWidth = 1.0f;
+    private float grassMinHeight = 1.0f;
+    private float grassMaxHeight = 1.0f;
     private float grassNoiseSpread = 0.1f;
 
     private int detailDensity = 1;
@@ -24,10 +24,27 @@ public class GrassManagerWindow : EditorWindow
     {
         GetWindow<GrassManagerWindow>("Grass Manager");
     }
-
     private void OnEnable()
     {
         terrains = FindObjectsOfType<Terrain>();
+
+        if (terrains != null && terrains.Length > 0 && terrains[0].terrainData.detailPrototypes.Length >= 4)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                grassTextures[i] = terrains[0].terrainData.detailPrototypes[i].prototypeTexture;
+            }
+        }
+        else if (terrains != null && terrains.Length > 0)
+        {
+            // If the first terrain has less than 4 detail layers, you might want to handle this case
+            // gracefully rather than ignoring it, perhaps logging a warning or an error.
+            Debug.LogWarning("The first terrain does not have enough detail layers to populate all grass textures!");
+        }
+        else
+        {
+            Debug.LogError("No terrains found in the scene!");
+        }
     }
 
     private void OnGUI()
@@ -138,6 +155,9 @@ public class GrassManagerWindow : EditorWindow
                     newPrototype.maxHeight = grassMaxHeight;
                     newPrototype.noiseSpread = grassNoiseSpread;
                     newPrototype.renderMode = DetailRenderMode.GrassBillboard;
+
+                    newPrototype.healthyColor = grassHealthyColor;
+                    newPrototype.dryColor = grassDryColor;
 
                     DetailPrototype[] currentDetailPrototypes = terrain.terrainData.detailPrototypes;
                     DetailPrototype[] newDetailPrototypes = new DetailPrototype[currentDetailPrototypes.Length + 1];
