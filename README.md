@@ -8,6 +8,7 @@ Unity Grass Manager is a user-friendly Editor Window tool developed for Unity3D,
 - **Detail Customization**: Customize grass detail settings including minimum/maximum width and height, noise spread, and colors.
 - **Texture Management**: Manage up to four grass textures, including adding them to terrains and applying them as detail layers.
 - **Optimization**: Optimize terrain settings and clean terrains by removing or clearing all grass layers.
+- **Mass Placement**: Cover all terrains in the scene with grass from top to bottom in a single click.
 
 ## How to Install
 
