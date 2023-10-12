@@ -14,16 +14,16 @@ public class GrassManagerWindow : EditorWindow
     private float grassNoiseSpread = 0.1f;
 
     private int detailDensity = 1;
+    private int selectedGrassTextureIndex = 0;
 
     private Texture2D[] grassTextures = new Texture2D[4];
-
-    private int selectedGrassTextureIndex = 0;
 
     [MenuItem("Window/Grass Manager")]
     public static void ShowWindow()
     {
         GetWindow<GrassManagerWindow>("Grass Manager");
     }
+    
     private void OnEnable()
     {
         terrains = FindObjectsOfType<Terrain>();
@@ -37,8 +37,7 @@ public class GrassManagerWindow : EditorWindow
         }
         else if (terrains != null && terrains.Length > 0)
         {
-            // If the first terrain has less than 4 detail layers, you might want to handle this case
-            // gracefully rather than ignoring it, perhaps logging a warning or an error.
+            // If the first terrain has less than 4 detail layers
             Debug.LogWarning("The first terrain does not have enough detail layers to populate all grass textures!");
         }
         else
@@ -61,25 +60,24 @@ public class GrassManagerWindow : EditorWindow
         grassHealthyColor = EditorGUILayout.ColorField("Healthy Color", grassHealthyColor);
         grassDryColor = EditorGUILayout.ColorField("Dry Color", grassDryColor);
 
-
         for (int i = 0; i < grassTextures.Length; i++)
         {
             grassTextures[i] = (Texture2D)EditorGUILayout.ObjectField($"Grass Texture {i + 1}", grassTextures[i], typeof(Texture2D), false);
         }
 
-        //Optimise Terrain Settings
+        // Optimise Terrain Settings
         if (GUILayout.Button("Click here to apply optimal terrain detail settings."))
         {
             OptimiseTerrainSettings();
         }
 
-        //Remove All Detail Layers
+        // Remove All Detail Layers
         if (GUILayout.Button("Click here to remove all grass layers from terrains and start from scratch."))
         {
             RemoveAllDetailLayers();
         }
 
-        //Apply Grass Details
+        // Apply Grass Details
         if (GUILayout.Button("Once you've chosen your 4 grass details, click here to apply to all terrains."))
         {
             ApplyGrassDetailSettings();
@@ -114,7 +112,7 @@ public class GrassManagerWindow : EditorWindow
             selectedGrassTextureIndex = EditorGUILayout.Popup("Select Grass Texture", selectedGrassTextureIndex, grassTextureNames);
         }
 
-        //Distribute Selected Grass
+        // Distribute Selected Grass
         if (GUILayout.Button("Click here to distribute selected grass over all terrains."))
         {
             DistributeGrassOverTerrains();
