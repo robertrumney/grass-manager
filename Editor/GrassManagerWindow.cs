@@ -3,10 +3,11 @@ using UnityEditor;
 
 public class GrassManagerWindow : EditorWindow
 {
-    private Color grassHealthyColor = Color.white;
-    private Color grassDryColor = Color.grey;  //495706
-
     private Terrain[] terrains;
+
+    private Color grassHealthyColor = Color.white;
+    private Color grassDryColor = HexToColor("495706FF");
+    
     private float grassMinWidth = 0.5f;
     private float grassMaxWidth = 1.0f;
     private float grassMinHeight = 1.0f;
@@ -236,5 +237,20 @@ public class GrassManagerWindow : EditorWindow
         {
             terrain.terrainData.detailPrototypes = new DetailPrototype[0];
         }
+    }
+
+    private Color HexToColor(string hex)
+    {
+        byte r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+        byte g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+        byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+        byte a = 255; // Assuming full opacity unless specified
+
+        if(hex.Length == 8)
+        {
+            a = byte.Parse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+        }
+
+        return new Color32(r, g, b, a);
     }
 }
