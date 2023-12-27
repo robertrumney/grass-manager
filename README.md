@@ -28,8 +28,8 @@ Unity Grass Manager is a user-friendly Editor Window tool developed for Unity3D,
 ### Grass Textures
 
 - Manage up to 4 grass textures.
-- Assign the textures to be used across terrains.
-- Select any texture and distribute it over the terrains.
+- Assign the grass textures to be used across terrains.
+- Automatically distribute grass details evenly across a terrain.
 
 ### Terrain Operations
 
