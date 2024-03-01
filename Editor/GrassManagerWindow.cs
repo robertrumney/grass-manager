@@ -6,8 +6,8 @@ public class GrassManagerWindow : EditorWindow
     private Terrain[] terrains;
 
     private Color grassHealthyColor = Color.white;
-    private Color grassDryColor = HexToColor("495706FF");
-    
+    private Color grassDryColor;
+
     private float grassMinWidth = 0.5f;
     private float grassMaxWidth = 1.0f;
     private float grassMinHeight = 1.0f;
@@ -24,7 +24,13 @@ public class GrassManagerWindow : EditorWindow
     {
         GetWindow<GrassManagerWindow>("Grass Manager");
     }
-    
+
+
+    public GrassManagerWindow()
+    {
+        grassDryColor = HexToColor("495706FF"); 
+    }
+
     private void OnEnable()
     {
         terrains = FindObjectsOfType<Terrain>();
@@ -246,7 +252,7 @@ public class GrassManagerWindow : EditorWindow
         byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
         byte a = 255; // Assuming full opacity unless specified
 
-        if(hex.Length == 8)
+        if (hex.Length == 8)
         {
             a = byte.Parse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
         }
